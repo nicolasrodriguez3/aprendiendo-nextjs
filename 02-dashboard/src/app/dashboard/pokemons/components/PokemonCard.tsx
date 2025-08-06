@@ -15,8 +15,8 @@ export const PokemonCard = ({ pokemon }: Props) => {
             <button className="text-red-600 hover:scale-110 active:scale-95 transition-transform duration-150 absolute top-2 right-2">
                 <IoHeartOutline size={24} />
             </button>
-            <Link href={`/dashboard/pokemon/${id}`} className="flex items-center justify-center w-full h-32 mb-2">
-                <Image className="rounded-t-lg h-auto"
+            <Link href={`/dashboard/pokemons/${id}`} className="flex items-center justify-center w-full h-32 mb-2">
+                <Image className="rounded-t-lg"
                     key={id}
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
                     width={100}

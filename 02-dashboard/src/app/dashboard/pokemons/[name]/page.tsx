@@ -1,64 +1,53 @@
-import type { Pokemon } from "@/pokemons"
+import type { Pokemon, PokemonsResponse } from "@/pokemons"
 import { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
 interface Props {
     params: {
-        id: string
+        name: string
     }
 }
 
 export async function generateStaticParams() {
-    const static151Pokemons = Array.from({ length: 151 }, (_, i) => i + 1)
+    const data = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`, { cache: "force-cache" })
 
-    return static151Pokemons.map( id => ({id}))
+    const pokemons: PokemonsResponse = await data.json()
+
+    return pokemons.results.map(pokemon => ({ name: pokemon.name }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    try {
-        const { id } =  params
-        const pokemon = await getPokemon(id)
+    const { name } = await params
+    const pokemon = await getPokemon(name)
 
-        const pokemonId = (pokemon.id).toString().padStart(3, '0')
-        const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+    const pokemonId = (pokemon.id).toString().padStart(3, '0')
+    const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
 
 
-        return {
-            title: `#${pokemonId} ${pokemonName}`,
-            description: `Página del pokemon ${pokemonName}`,
-        }
-    } catch (err) {
-        console.error(err);
-        return {
-            title: "Pokemon no encontrado",
-            description: "Página del pokemon no encontrado",
-        }
+
+    return {
+        title: `#${pokemonId} ${pokemonName}`,
+        description: `Página del pokemon ${pokemonName}`,
     }
 }
 
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
-    try {
+const getPokemon = async (name: string): Promise<Pokemon> => {
+    const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, { cache: "force-cache" })
 
-        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, { cache: "force-cache" })
-        
-        if (!pokemonResponse.ok) {
-            notFound()
-        }
-        
-        const pokemon = await pokemonResponse.json()
-        
-        return pokemon
-    } catch (err) {
-        console.error(err);
+    if (!pokemonResponse.ok) {
         notFound()
     }
+
+    const pokemon = await pokemonResponse.json()
+
+    return pokemon
 }
 
 export default async function PokemonPage({ params }: Props) {
-    const { id } = await params
-    const pokemon = await getPokemon(id);
+    const { name } = await params
+    const pokemon = await getPokemon(name);
 
     return (
         <div className="flex w-full mt-5 flex-col items-center text-slate-800">
