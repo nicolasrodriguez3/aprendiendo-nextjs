@@ -10,26 +10,42 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id } = await params
-    const pokemon = await getPokemon(id)
+    try {
 
-    return {
-        title: pokemon.name,
-        description: pokemon.name,
+        const { id } = await params
+        const pokemon = await getPokemon(id)
+
+        return {
+            title: pokemon.name,
+            description: pokemon.name,
+        }
+    } catch (err) {
+        console.error(err);
+
+        return {
+            title: "Pokemon not found",
+            description: "Pokemon not found",
+        }
     }
 }
 
 
 const getPokemon = async (id: string): Promise<Pokemon> => {
-    const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, { cache: "force-cache" })
+    try {
 
-    if (!pokemonResponse.ok) {
+        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, { cache: "force-cache" })
+        
+        if (!pokemonResponse.ok) {
+            notFound()
+        }
+        
+        const pokemon = await pokemonResponse.json()
+        
+        return pokemon
+    } catch (err) {
+        console.error(err);
         notFound()
     }
-
-    const pokemon = await pokemonResponse.json()
-
-    return pokemon
 }
 
 export default async function PokemonPage({ params }: Props) {
