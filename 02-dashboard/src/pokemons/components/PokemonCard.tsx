@@ -1,7 +1,10 @@
+"use client"
+
 import type { SimplePokemon } from "@/pokemons"
+import { useAppSelector } from "@/store"
 import Image from "next/image"
 import Link from "next/link"
-import { IoHeartOutline } from "react-icons/io5"
+import { IoHeart, IoHeartOutline } from "react-icons/io5"
 
 interface Props {
     pokemon: SimplePokemon
@@ -9,11 +12,23 @@ interface Props {
 
 export const PokemonCard = ({ pokemon }: Props) => {
     const { id, name } = pokemon
+    const isFavorite = useAppSelector((state) => !!state.pokemons[id])
+    const onToggle = () => {
+        console.log("click")
+    }
+
 
     return (
         <div className="max-w-sm w-60 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-5 relative">
-            <button className="text-red-600 hover:scale-110 active:scale-95 transition-transform duration-150 absolute top-2 right-2">
-                <IoHeartOutline size={24} />
+            <button className="text-red-600 hover:scale-110 active:scale-95 transition-transform duration-150 absolute top-2 right-2 cursor-pointer"
+                onClick={
+                    onToggle()
+                }
+            >
+                {
+                    isFavorite ?
+                        <IoHeart size={24} /> :
+                        <IoHeartOutline size={24} />}
             </button>
             <Link href={`/dashboard/pokemons/${id}`} className="flex items-center justify-center w-full h-32 mb-2">
                 <Image className="rounded-t-lg h-auto"
