@@ -1,21 +1,21 @@
 "use client"
+
 import { IoCartOutline } from "react-icons/io5"
 import { SimpleWidget } from "./SimpleWidget"
-
-const widgets = [
-  {
-    label: "Contador",
-    link: "/dashboard/counter",
-    title: "5",
-    subTitle: "Productos en el carrito",
-    icon: <IoCartOutline size={40} className="to-blue-500" />
-  }
-]
+import { useAppSelector } from "@/store"
 
 export const WidgetsGrid = () => {
+  const inCart = useAppSelector(state => state.counter.count)
+
   return (
     <div className='flex flex-wrap gap-4 mt-2'>
-        <SimpleWidget {...widgets[0]} />
-      </div>
+      <SimpleWidget
+        title={inCart.toString()}
+        subTitle="Productos en el carrito"
+        icon={<IoCartOutline size={40} className="text-blue-600" />}
+        link="/dashboard/counter"
+        label="Contador"
+      />
+    </div>
   )
 }

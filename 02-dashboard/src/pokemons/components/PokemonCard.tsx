@@ -1,7 +1,8 @@
 "use client"
 
 import type { SimplePokemon } from "@/pokemons"
-import { useAppSelector } from "@/store"
+import { useAppDispatch, useAppSelector } from "@/store"
+import { toggleFavorite } from "@/store/pokemons/pokemons"
 import Image from "next/image"
 import Link from "next/link"
 import { IoHeart, IoHeartOutline } from "react-icons/io5"
@@ -13,8 +14,10 @@ interface Props {
 export const PokemonCard = ({ pokemon }: Props) => {
     const { id, name } = pokemon
     const isFavorite = useAppSelector((state) => !!state.pokemons[id])
+    const dispatch = useAppDispatch()
+
     const onToggle = () => {
-        console.log("click")
+        dispatch(toggleFavorite(pokemon))
     }
 
 
@@ -22,7 +25,7 @@ export const PokemonCard = ({ pokemon }: Props) => {
         <div className="max-w-sm w-60 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-5 relative">
             <button className="text-red-600 hover:scale-110 active:scale-95 transition-transform duration-150 absolute top-2 right-2 cursor-pointer"
                 onClick={
-                    onToggle()
+                    onToggle
                 }
             >
                 {
