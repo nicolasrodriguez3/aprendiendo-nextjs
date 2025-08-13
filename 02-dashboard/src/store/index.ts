@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import counterReducer from "./counter/counterSlice";
 import pokemonsReducer from "./pokemons/pokemons";
-import { localStorageMiddleware } from "./middlewares/localstorage";
+import { localStorageMiddleware } from "./middlewares/localstorage-middleware";
+
 
 export const store = configureStore({
   reducer: {
