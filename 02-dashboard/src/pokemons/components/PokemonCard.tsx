@@ -24,9 +24,7 @@ export const PokemonCard = ({ pokemon }: Props) => {
     return (
         <div className="max-w-sm w-60 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-5 relative">
             <button className="text-red-600 hover:scale-110 active:scale-95 transition-transform duration-150 absolute top-2 right-2 cursor-pointer"
-                onClick={
-                    onToggle
-                }
+                onClick={onToggle}
             >
                 {
                     isFavorite ?
