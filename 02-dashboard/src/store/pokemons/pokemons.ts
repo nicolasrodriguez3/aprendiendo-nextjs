@@ -11,7 +11,7 @@ const getFavorites = (): PokemonsState => {
   // if (typeof localStorage === undefined) return {};
 
   const favorites = localStorage.getItem("favorites-pokemons");
-  return favorites ? JSON.parse(favorites) : {};
+  return favorites ? JSON.parse(favorites) : {favorites: {}};
 };
 
 const initialState: PokemonsState = {
