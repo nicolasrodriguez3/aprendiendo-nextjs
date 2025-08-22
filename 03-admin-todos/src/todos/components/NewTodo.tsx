@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { IoTrashOutline } from "react-icons/io5";
 
 import { createTodo, deleteCompletedTodos } from '../helpers/todos';
+import { addTodo, deleteCompleted } from '../actions/actions';
 
 
 export const NewTodo = () => {
@@ -16,15 +17,17 @@ export const NewTodo = () => {
     e.preventDefault()
     if (!description) return
 
-    createTodo(description)
+    addTodo(description)
+    // createTodo(description)
     setDescription('')
 
-    router.refresh()
+    // router.refresh()
   }
 
   const handleDeleteCompleted = async () => {
-    deleteCompletedTodos()
-    router.refresh()
+    // deleteCompletedTodos()
+    // router.refresh()
+    await deleteCompleted()
   }
 
   return (
