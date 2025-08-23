@@ -1,33 +1,23 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
-
 import { IoTrashOutline } from "react-icons/io5";
-
-import { createTodo, deleteCompletedTodos } from '../helpers/todos';
 import { addTodo, deleteCompleted } from '../actions/actions';
 
 
 export const NewTodo = () => {
-  const router = useRouter()
   const [description, setDescription] = useState('')
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!description) return
 
-    addTodo(description)
-    // createTodo(description)
-    setDescription('')
-
-    // router.refresh()
-  }
-
-  const handleDeleteCompleted = async () => {
-    // deleteCompletedTodos()
-    // router.refresh()
-    await deleteCompleted()
+    try {
+      await addTodo(description)
+      setDescription('')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -46,7 +36,7 @@ export const NewTodo = () => {
       <span className='flex flex-1'></span>
 
       <button
-        onClick={() => handleDeleteCompleted()}
+        onClick={() => deleteCompleted()}
         type="button" className="flex items-center gap-2 justify-center rounded ml-2 bg-red-400 p-2 text-white hover:bg-red-700 transition-all">
         <IoTrashOutline />
         Borrar completados

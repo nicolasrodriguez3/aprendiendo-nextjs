@@ -5,11 +5,7 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 
 export const toggleTodo = async (id: string, complete: boolean): Promise<Todo> => {
-  const todo = await prisma.todo.findFirst({
-    where: {
-      id,
-    },
-  })
+  const todo = await prisma.todo.findFirst({ where: { id } })
 
   if (!todo) throw new Error("Todo not found")
 
