@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 import { TabBar } from "@/components/TabBar";
 
 
@@ -6,11 +7,14 @@ export const metadata = {
   description: 'Aprendiendo a usar Cookies',
 };
 
-export default function CookiesPage() {
+export default async function CookiesPage() {
+  const cookieStore = await cookies()
+  const cookiesTab = cookieStore.get('selectedTab')?.value ?? "1"
+
   return (
     <div className="flex flex-col w-full items-center">
       <span>Tabs</span>
-      <TabBar />
+      <TabBar currentTab={+cookiesTab} />
 
     </div>
   );
