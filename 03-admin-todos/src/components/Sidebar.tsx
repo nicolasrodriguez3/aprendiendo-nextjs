@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from "next/image";
-import { IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoNutritionOutline } from "react-icons/io5"
+import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoNutritionOutline } from "react-icons/io5"
 import { CiLogout } from "react-icons/ci";
 
 import { SidebarItem } from './SidebarItem';
@@ -27,7 +27,11 @@ const sidebarItems = [
         title: "Cookies",
         path: "/dashboard/cookies",
         icon: <IoNutritionOutline size={30} />
-
+    },
+    {
+        title: "Products",
+        path: "/dashboard/products",
+        icon: <IoBasketOutline size={30} />
     },
 ]
 
@@ -37,10 +41,10 @@ export const Sidebar = () => {
             <div>
                 <div className="-mx-6 px-6 py-4">
                     <Link href="#" title="home">
-                        <Image src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" className="w-32" alt="tailus logo" width={128} height={128} />
+                        <Image src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" className="w-32" alt="tailus logo" width={128} height={48} />
                     </Link>
                 </div>
-                <div className="mt-8 text-center">
+                <div className="mt-4 text-center">
                     <Image
                         src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c"
                         width={120}
@@ -53,7 +57,7 @@ export const Sidebar = () => {
                     <span className="hidden text-gray-400 lg:block">Admin</span>
                 </div>
 
-                <ul className="space-y-2 tracking-wide mt-8">
+                <ul className="space-y-2 tracking-wide mt-8 overflow-y-auto min-h-32 flex-1">
                     {
                         sidebarItems.map(item => (
                             <SidebarItem key={item.title} {...item} />
