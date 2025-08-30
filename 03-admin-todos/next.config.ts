@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("https://tailus.io/**"),
       new URL("https://images.unsplash.com/**"),
+      // new URL("https://avatars.githubusercontent.com/**"),
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
+      },
     ]
   }
 };

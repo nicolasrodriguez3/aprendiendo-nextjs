@@ -4,6 +4,8 @@ import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoListOutline, I
 import { CiLogout } from "react-icons/ci";
 
 import { SidebarItem } from './SidebarItem';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 const sidebarItems = [
     {
@@ -35,7 +37,14 @@ const sidebarItems = [
     },
 ]
 
-export const Sidebar = () => {
+export const Sidebar = async () => {
+    const session = await auth()
+    if (!session?.user) {
+        redirect("api/auth/signin")
+    }
+
+    const { name, image } = session?.user
+
     return (
         <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
             <div>
@@ -45,15 +54,16 @@ export const Sidebar = () => {
                     </Link>
                 </div>
                 <div className="mt-4 text-center">
-                    <Image
-                        src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c"
-                        width={120}
-                        height={120}
-                        alt="User avatar"
-                        className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
-                        priority
-                    />
-                    <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Cynthia J. Watts</h5>
+                    {image &&
+                        <Image
+                            src={image}
+                            width={120}
+                            height={120}
+                            alt="User avatar"
+                            className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
+                            priority
+                        />}
+                    <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">{name}</h5>
                     <span className="hidden text-gray-400 lg:block">Admin</span>
                 </div>
 
