@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from "next/image";
-import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoNutritionOutline } from "react-icons/io5"
+import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoNutritionOutline, IoPersonOutline } from "react-icons/io5"
 import { CiLogout } from "react-icons/ci";
 
 import { SidebarItem } from './SidebarItem';
@@ -33,9 +33,14 @@ const sidebarItems = [
         icon: <IoNutritionOutline size={30} />
     },
     {
-        title: "Products",
+        title: "Productos",
         path: "/dashboard/products",
         icon: <IoBasketOutline size={30} />
+    },
+    {
+        title: "Mi perfil",
+        path: "/dashboard/profile",
+        icon: <IoPersonOutline size={30} />
     },
 ]
 
