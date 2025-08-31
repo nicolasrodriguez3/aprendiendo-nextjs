@@ -47,7 +47,7 @@ const sidebarItems = [
 export const Sidebar = async () => {
     const session = await auth()
     if (!session?.user) {
-        redirect("api/auth/signin")
+        redirect("/api/auth/signin")
     }
 
     const { name, image } = session?.user
