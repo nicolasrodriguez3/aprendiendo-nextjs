@@ -7,6 +7,8 @@ import { SidebarItem } from './SidebarItem';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
+import logo from "@/../public/images/logo.webp"
+
 const sidebarItems = [
     {
         title: "Dashboard",
@@ -49,8 +51,9 @@ export const Sidebar = async () => {
         <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
             <div>
                 <div className="-mx-6 px-6 py-4">
-                    <Link href="#" title="home">
-                        <Image src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" className="w-32" alt="tailus logo" width={128} height={48} />
+                    <Link href="#" title="home" className="flex items-center gap-2 text-xl">
+                        <Image src={logo} className="w-16" alt="tailus logo" width={64} height={64} />
+                        Logo
                     </Link>
                 </div>
                 <div className="mt-4 text-center">
