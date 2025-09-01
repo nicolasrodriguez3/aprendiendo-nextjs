@@ -8,6 +8,7 @@ import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
 import logo from "@/../public/images/logo.webp"
+import { LogoutButton } from './LogoutButton';
 
 const sidebarItems = [
     {
@@ -46,11 +47,10 @@ const sidebarItems = [
 
 export const Sidebar = async () => {
     const session = await auth()
-    if (!session?.user) {
-        redirect("/api/auth/signin")
-    }
 
-    const { name, image } = session?.user
+    const userData = session?.user
+    const name = userData?.name ?? "Sin datos"
+    const image = userData?.image
 
     return (
         <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
@@ -79,17 +79,13 @@ export const Sidebar = async () => {
                     {
                         sidebarItems.map(item => (
                             <SidebarItem key={item.title} {...item} />
-                        )
-                        )
+                        ))
                     }
                 </ul>
             </div>
 
             <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
-                <button className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-                    <CiLogout />
-                    <span className="group-hover:text-gray-700">Logout</span>
-                </button>
+                <LogoutButton />
             </div>
         </aside>
     )
