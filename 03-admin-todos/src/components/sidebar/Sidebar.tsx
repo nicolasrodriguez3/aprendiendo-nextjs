@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import Image from "next/image";
 import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoNutritionOutline, IoPersonOutline } from "react-icons/io5"
-import { CiLogout } from "react-icons/ci";
 
 import { SidebarItem } from './SidebarItem';
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 
 import logo from "@/../public/images/logo.webp"
 import { LogoutButton } from './LogoutButton';
