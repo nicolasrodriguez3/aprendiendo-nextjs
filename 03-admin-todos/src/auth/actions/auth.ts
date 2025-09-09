@@ -1,5 +1,11 @@
+import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+
+export const getUserSession = async () => {
+  const session = await auth()
+  return session?.user
+}
 
 export const signInWithEmailAndPassword = async (email: string, password: string) => {
   if (!email || !password) return null
@@ -12,7 +18,7 @@ export const signInWithEmailAndPassword = async (email: string, password: string
 
   if (!user) {
     const newUser = await createUser(email, password)
-    console.log({newUser})
+    console.log({ newUser })
     return newUser
   }
 
@@ -32,7 +38,7 @@ const createUser = async (email: string, password: string) => {
         name: email.split("@")[0],
       },
     })
-    console.log({user})
+    console.log({ user })
     return user
   } catch (error) {
     console.log("Error " + error)
