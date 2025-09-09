@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma"
 
 import Google from "next-auth/providers/google"
 import GitHub from "next-auth/providers/github"
+import Credentials from "next-auth/providers/credentials"
 
 declare module "next-auth" {
   /**
@@ -19,6 +20,7 @@ declare module "next-auth" {
 }
 
 import { JWT } from "next-auth/jwt"
+import { signInWithEmailAndPassword } from "./auth/actions/auth"
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
   interface JWT {
@@ -30,7 +32,26 @@ declare module "next-auth/jwt" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google, GitHub],
+  providers: [
+    Google,
+    GitHub,
+    Credentials({
+      credentials: {
+        email: { label: "Email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, request) {
+        const { email, password } = credentials
+
+        const user = await signInWithEmailAndPassword(email as string, password as string)
+
+        if (!user) {
+          return null
+        }
+        return user
+      },
+    }),
+  ],
 
   session: {
     strategy: "jwt",
@@ -48,7 +69,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       })
 
-      console.log(dbUser)
       if (dbUser?.isActive === false) {
         throw new Error("User is not active")
       }
