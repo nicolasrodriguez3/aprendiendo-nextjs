@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function RestTodosPage() {
     const user = await getUserSession()
-    if (!user) redirect("api/auth/signin")
+    if (!user) redirect("/api/auth/signin")
 
     const todos = await prisma.todo.findMany({ orderBy: { id: 'desc' }, where: { userId: user.id} })
 

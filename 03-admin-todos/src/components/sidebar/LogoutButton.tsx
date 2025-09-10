@@ -3,14 +3,16 @@
 import { signIn, signOut, useSession } from "next-auth/react"
 import { IoLogInOutline, IoLogOutOutline, IoShieldOutline } from "react-icons/io5"
 
+const baseClass = "px-4 py-3 flex-1 flex items-center space-x-4 rounded-md text-gray-600 hover:text-gray-800 bg-gradient-to-r hover:from-gray-500/30 hover:to-gray-400/30 cursor-pointer"
+
 export const LogoutButton = () => {
-    const { data: session, status } = useSession()
+    const { status } = useSession()
 
     if (status === "loading") {
         return (
-            <button className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+            <button className={baseClass}>
                 <IoShieldOutline />
-                <span className="group-hover:text-gray-700">Cargando...</span>
+                <span>Cargando...</span>
             </button>
         )
     }
@@ -18,18 +20,18 @@ export const LogoutButton = () => {
     if (status === "unauthenticated") {
         return (
             <button onClick={() => signIn()}
-                className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                className={baseClass}>
                 <IoLogInOutline />
-                <span className="group-hover:text-gray-700">Ingresar</span>
+                <span>Ingresar</span>
             </button>
         )
     }
 
     return (
         <button onClick={() => signOut()}
-            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+            className={baseClass}>
             <IoLogOutOutline />
-            <span className="group-hover:text-gray-700">Cerrar sesión</span>
+            <span>Cerrar sesión</span>
         </button>
     )
 }
