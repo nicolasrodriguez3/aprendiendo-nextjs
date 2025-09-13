@@ -1,8 +1,9 @@
+
 import type { Metadata } from "next";
+import { geistMono, geistSans } from "@/config/fonts";
+import { TopMenu } from "@/components";
 
 import "./globals.css";
-import { geistMono, geistSans } from "@/config/fonts";
-
 
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <TopMenu />
         {children}
       </body>
     </html>
