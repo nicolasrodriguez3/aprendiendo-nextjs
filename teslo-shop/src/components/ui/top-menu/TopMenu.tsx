@@ -28,7 +28,7 @@ export const TopMenu = () => {
         <Link href="/category/women" className="text-lg hover:underline">
           Mujeres
         </Link>
-        <Link href="/category/kids" className="text-lg hover:underline">
+        <Link href="/category/kid" className="text-lg hover:underline">
           Niños
         </Link>
       </div>
