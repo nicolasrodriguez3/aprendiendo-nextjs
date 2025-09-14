@@ -1,10 +1,7 @@
-
 import type { Metadata } from "next";
 import { geistMono, geistSans } from "@/config/fonts";
-import { TopMenu } from "@/components";
 
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: "Teslo | Shop",
@@ -21,7 +18,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TopMenu />
         {children}
       </body>
     </html>

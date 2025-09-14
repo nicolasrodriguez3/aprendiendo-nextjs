@@ -1,14 +1,20 @@
-import Link from "next/link"
-import { titleFont } from "@/config/fonts"
-import { IoCartOutline, IoSearchOutline } from "react-icons/io5"
+"use client";
+
+import Link from "next/link";
+import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+import { titleFont } from "@/config/fonts";
+import { useUIStore } from "@/store";
 
 export const TopMenu = () => {
+  const openSideMenu = useUIStore((state) => state.openSideMenu);
   return (
     <nav className="flex justify-between items-center w-full px-5 py-2">
       {/* Logo */}
       <div>
         <Link href="/">
-          <span className={`${titleFont.className} text-2xl font-bold cursor-pointer`}>
+          <span
+            className={`${titleFont.className} text-2xl font-bold cursor-pointer`}
+          >
             Teslo
           </span>
         </Link>
@@ -25,7 +31,6 @@ export const TopMenu = () => {
         <Link href="/category/kids" className="text-lg hover:underline">
           Niños
         </Link>
-
       </div>
 
       {/* Search, Cart, Menu */}
@@ -43,8 +48,14 @@ export const TopMenu = () => {
           </div>
         </Link>
 
-        <button className="p-2 rounded-md transition-all hover:bg-gray-100" type="button">Menú</button>
+        <button
+          className="p-2 rounded-md transition-all hover:bg-gray-100"
+          type="button"
+          onClick={() => openSideMenu()}
+        >
+          Menú
+        </button>
       </div>
     </nav>
-  )
-}
+  );
+};
