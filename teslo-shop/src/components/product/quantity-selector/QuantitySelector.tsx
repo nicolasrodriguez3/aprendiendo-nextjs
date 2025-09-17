@@ -60,7 +60,7 @@ export const QuantitySelector = ({ quantity, maxQuantity }: Props) => {
           <IoRemoveCircleOutline size={24} />
         </button>
         <input
-          className="w-20 px-5 py-2 bg-gray-100 dark:bg-gray-100/10 text-center text-lg rounded"
+          className="w-20 px-4 py-1 bg-gray-100 dark:bg-gray-100/10 text-center text-lg rounded"
           value={count}
           onChange={onQuantityChangeManually}
         />
