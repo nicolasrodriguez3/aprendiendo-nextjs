@@ -74,7 +74,7 @@ export const Sidebar = () => {
         </Link>
 
         <Link
-          href="/"
+          href="/auth/login"
           className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoLogInOutline size={30} />
