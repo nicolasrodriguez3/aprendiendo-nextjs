@@ -15,5 +15,6 @@ DATABASE_URL="postgresql://postgres:123456@localhost:5432/teslo-shop?schema=publ
 3. Instalar las dependencias ```npm install```
 4. Levantar la base de datos ```docker-compose up -d```
 5. Ejecutar las migraciones de la base de datos ```npx prisma migrate dev```
-6. Ejecutar el proyecto ```npm run dev```
+6. Ejecutar el seed de la base de datos ```npm run seed```
+7. Ejecutar el proyecto ```npm run dev```
 
