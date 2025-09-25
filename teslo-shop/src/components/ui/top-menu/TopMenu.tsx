@@ -22,13 +22,13 @@ export const TopMenu = () => {
 
       {/* Center Menu */}
       <div className="hidden sm:flex gap-7">
-        <Link href="/category/men" className="text-lg hover:underline">
+        <Link href="/gender/men" className="text-lg hover:underline">
           Hombres
         </Link>
-        <Link href="/category/women" className="text-lg hover:underline">
+        <Link href="/gender/women" className="text-lg hover:underline">
           Mujeres
         </Link>
-        <Link href="/category/kid" className="text-lg hover:underline">
+        <Link href="/gender/kid" className="text-lg hover:underline">
           Niños
         </Link>
       </div>
