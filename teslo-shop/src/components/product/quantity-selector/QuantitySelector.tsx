@@ -7,29 +7,35 @@ import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 interface Props {
   quantity: number;
   maxQuantity?: number;
+
+  onQuantityChange: (quantity: number) => void;
 }
 
-export const QuantitySelector = ({ quantity, maxQuantity }: Props) => {
-  const [count, setCount] = useState(quantity);
+export const QuantitySelector = ({
+  quantity,
+  maxQuantity,
+  onQuantityChange,
+}: Props) => {
+  // const [count, setCount] = useState(quantity);
   const [error, setError] = useState("");
 
-  const onQuantityChange = (value: number) => {
+  const onValueChange = (value: number) => {
     if (error) {
       setError("");
-      setCount(maxQuantity ? maxQuantity : 1);
+      onQuantityChange(maxQuantity ? maxQuantity : 1);
     }
-    if (count + value < 1) return;
-    if (maxQuantity && count + value > maxQuantity) return;
+    if (quantity + value < 1) return;
+    if (maxQuantity && quantity + value > maxQuantity) return;
 
-    setCount(count + value);
+    onQuantityChange(quantity + value);
   };
 
-  const onQuantityChangeManually = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onValueChangeManually = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
     const value = e.target.value;
 
     if (value === "") {
-      setCount(0);
+      onQuantityChange(0);
       return;
     }
     const number = Number(value);
@@ -43,7 +49,7 @@ export const QuantitySelector = ({ quantity, maxQuantity }: Props) => {
       setError("Quantity must be greater than 0");
     }
 
-    setCount(number);
+    onQuantityChange(number);
   };
 
   return (
@@ -51,20 +57,21 @@ export const QuantitySelector = ({ quantity, maxQuantity }: Props) => {
       <div className="flex gap-3 items-center">
         <button
           type="button"
-          className={clsx("", {
-            "cursor-not-allowed": count === 1,
-            "cursor-pointer": count > 1,
-          })}
-          onClick={() => onQuantityChange(-1)}
+          className={quantity === 1 ? "cursor-not-allowed" : "cursor-pointer"}
+          onClick={() => onValueChange(-1)}
         >
           <IoRemoveCircleOutline size={24} />
         </button>
         <input
           className="w-20 px-4 py-1 bg-gray-100 dark:bg-gray-100/10 text-center text-lg rounded"
-          value={count}
-          onChange={onQuantityChangeManually}
+          value={quantity}
+          onChange={onValueChangeManually}
         />
-        <button type="button" onClick={() => onQuantityChange(1)}>
+        <button
+          type="button"
+          className={quantity === maxQuantity ? "cursor-not-allowed" : "cursor-pointer"}
+         onClick={() => onValueChange(1)}
+        >
           <IoAddCircleOutline size={24} />
         </button>
       </div>
