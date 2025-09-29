@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 import { QuantitySelector, SizeSelector } from "@/components";
-import type { Product, Size } from "@/interfaces";
+import type { CartProduct, Product, Size } from "@/interfaces";
+import { useCartStore } from "@/store";
 
 interface Props {
   product: Product;
 }
 
 export const AddToCart = ({ product }: Props) => {
+  const addProductToCart = useCartStore((state) => state.addProductToCart);
+
   const [size, setSize] = useState<Size | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [posted, setPosted] = useState<boolean>(false);
@@ -17,13 +20,28 @@ export const AddToCart = ({ product }: Props) => {
     setPosted(true);
     if (!size) return;
 
-    console.log({ size, quantity });
+    const cartProduct: CartProduct = {
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      price: product.price,
+      image: product.images[0],
+      quantity: quantity,
+      size: size,
+    };
+
+    addProductToCart(cartProduct);
+    setPosted(false)
+    setQuantity(1)
+    setSize(null)
   };
 
   return (
     <>
       {posted && !size && (
-        <span className="mt-2 text-red-500 fade-in duration-100">* Debe seleccionar una talla</span>
+        <span className="mt-2 text-red-500 fade-in duration-100">
+          * Debe seleccionar una talla
+        </span>
       )}
 
       {/* Talles */}

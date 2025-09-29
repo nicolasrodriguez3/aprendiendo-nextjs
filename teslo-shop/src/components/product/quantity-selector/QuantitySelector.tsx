@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import { useState } from "react";
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
@@ -16,7 +15,6 @@ export const QuantitySelector = ({
   maxQuantity,
   onQuantityChange,
 }: Props) => {
-  // const [count, setCount] = useState(quantity);
   const [error, setError] = useState("");
 
   const onValueChange = (value: number) => {
