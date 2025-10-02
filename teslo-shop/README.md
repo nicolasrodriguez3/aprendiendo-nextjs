@@ -10,7 +10,10 @@ DB_USER=postgres
 DB_NAME=teslo-shop
 DB_PASSWORD=123456
 DATABASE_URL="postgresql://postgres:123456@localhost:5432/teslo-shop?schema=public"
+AUTH_SECRET=your-secret-key
 ```
+
+> Es posible generar la clave secreta con `openssl rand -base64 32` 
 
 3. Instalar las dependencias ```pnpm install```
 4. Levantar la base de datos ```docker-compose up -d```

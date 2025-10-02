@@ -3,11 +3,17 @@ import { initialData } from "./seed";
 
 async function main() {
   // Limpiar la base de datos
+  await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
 
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
+
+  // Crear los usuarios
+  await prisma.user.createMany({
+    data: users,
+  });
 
   // Crear las categorias
   const categoriesData = categories.map((category) => ({
