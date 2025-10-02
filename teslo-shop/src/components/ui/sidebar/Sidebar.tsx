@@ -1,6 +1,8 @@
 "use client";
+
 import clsx from "clsx";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   IoCloseOutline,
   IoLogInOutline,
@@ -11,11 +13,15 @@ import {
   IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";
+import { logout } from "@/actions";
 import { useUIStore } from "@/store";
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeSideMenu = useUIStore((state) => state.closeSideMenu);
+
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
 
   return (
     <div>
@@ -33,7 +39,7 @@ export const Sidebar = () => {
       {/* Side menu */}
       <nav
         className={clsx(
-          "fixed p-5 right-0 top-0 w-[500px] h-screen dark:bg-gray-950 bg-white z-20 shadow-2xl transform transition-all duration-300 ease-in-out",
+          "fixed p-5 right-0 top-0 w-full max-w-md h-screen dark:bg-gray-950 bg-white z-20 shadow-2xl transform transition-all duration-300 ease-in-out flex flex-col gap-6",
           { "translate-x-full": !isSideMenuOpen },
         )}
       >
@@ -58,8 +64,9 @@ export const Sidebar = () => {
 
         {/* Menu */}
         <Link
-          href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          href="/profile"
+          onClick={() => closeSideMenu()}
+          className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoPersonOutline size={30} />
           <span>Perfil</span>
@@ -67,34 +74,43 @@ export const Sidebar = () => {
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoTicketOutline size={30} />
           <span>Órdenes</span>
         </Link>
 
-        <Link
-          href="/auth/login"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
-        >
-          <IoLogInOutline size={30} />
-          <span>Ingresar</span>
-        </Link>
+        {isAuthenticated && (
+          <button
+            type="button"
+            onClick={() => {
+              logout();
+              closeSideMenu();
+            }}
+            className="flex w-full items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          >
+            <IoLogOutOutline size={30} />
+            <span>Cerrar sesión</span>
+          </button>
+        )}
 
-        <Link
-          href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
-        >
-          <IoLogOutOutline size={30} />
-          <span>Cerrar sesión</span>
-        </Link>
+        {!isAuthenticated && (
+          <Link
+            href="/auth/login"
+            onClick={() => closeSideMenu()}
+            className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          >
+            <IoLogInOutline size={30} />
+            <span>Ingresar</span>
+          </Link>
+        )}
 
         {/* Separator */}
-        <div className="w-full h-px bg-gray-200 my-10" />
+        <div className="w-full h-px bg-gray-200 my-2" />
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoShirtOutline size={30} />
           <span>Productos</span>
@@ -102,7 +118,7 @@ export const Sidebar = () => {
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoTicketOutline size={30} />
           <span>Órdenes</span>
@@ -110,7 +126,7 @@ export const Sidebar = () => {
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
+          className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-sm transition-all gap-3 text-lg"
         >
           <IoPeopleOutline size={30} />
           <span>Usuarios</span>
